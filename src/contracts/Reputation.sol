@@ -21,7 +21,11 @@ contract Reputation is Ownable {
   Calification[] public califications;
   Shop[] public shops;
 
-  function getReputationByShop(uint256 _id) public view returns(Calification[] memory) {
+  function createCalification(uint256 _id_shop, uint8 _status, string memory _description) external {
+    califications.push(Calification(_id_shop, _status, _description, block.timestamp));
+  }
+
+  function getCalificationsByShop(uint256 _id) public view returns(Calification[] memory) {
     Calification[] memory result = new Calification[](califications.length);
     uint counter = 0;
     for (uint i = 0; i < califications.length; i++) {
