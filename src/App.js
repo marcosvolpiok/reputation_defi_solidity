@@ -6,7 +6,7 @@ import Califications from './abis/Califications.json'
 var Web3 = require('web3');
 var contract;
 var currentAccount;
-const contractAddress = '0x9b1f7F645351AF3631a656421eD2e40f2802E6c0';
+const contractAddress = '0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B';
 
 
 function App() {
@@ -23,31 +23,28 @@ function App() {
 
     contract = new window.web3.eth.Contract(Califications.abi, contractAddress);
 
-    //getCalifications();
+    getCalifications();
   }, [])
 
   useEffect(() => {
     fetchCalifications()
   }, [fetchCalifications]) 
   
-  
+  async function getCalifications(){
+    const result = await contract.methods.getCalifications().call();
+    console.log(result);
+    setCalifications(result);
+  }  
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {califications.map((calification, i) => (
+        <div key={i}>
+          <p>
+            ID: {i} - {calification.description}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }
