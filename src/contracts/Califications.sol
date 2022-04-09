@@ -2,7 +2,7 @@ pragma solidity ^0.8.0;
 
 import "./ownable.sol";
 
-contract Reputation is Ownable {
+contract Califications is Ownable {
   struct Calification {
     uint256 id_shop;
     uint8 status;
