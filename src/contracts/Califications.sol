@@ -25,9 +25,19 @@ contract Califications is Ownable {
     return califications;
   }
 
+  function getShops() public view returns(Shop[] memory){
+    return shops;
+  }
+
   function createCalification(uint256 _id_shop, uint8 _status, string memory _description) external onlyOwner {
     califications.push(Calification(_id_shop, _status, _description, block.timestamp));
   }
+
+  function createShop(uint256 _id, string memory _name, string memory _description, string memory _social, string memory _phone) external onlyOwner {
+    shops.push(Shop(_id, _name, _description, _social, _phone));
+  }
+
+  
 
   function getCalificationsByShop(uint256 _id) public view returns(Calification[] memory) {
     Calification[] memory result = new Calification[](califications.length);
