@@ -25,7 +25,7 @@ contract Reputation is Ownable {
     return califications;
   }
 
-  function createCalification(uint256 _id_shop, uint8 _status, string memory _description) external {
+  function createCalification(uint256 _id_shop, uint8 _status, string memory _description) external onlyOwner {
     califications.push(Calification(_id_shop, _status, _description, block.timestamp));
   }
 
