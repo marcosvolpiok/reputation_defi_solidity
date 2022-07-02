@@ -6,11 +6,12 @@ import Califications from './abis/Califications.json'
 var Web3 = require('web3');
 var contract;
 var currentAccount;
-const contractAddress = '0x254dffcd3277C0b1660F6d42EFbB754edaBAbC2B';
+const contractAddress = '0xCfEB869F69431e42cdB54A4F4f105C19C080A601';
 
 
 function App() {
   const [califications, setCalifications] = useState([]);
+  const [shops, setShops] = useState([]);
 
 
   const fetchCalifications = useCallback(async () => {    
@@ -23,7 +24,8 @@ function App() {
 
     contract = new window.web3.eth.Contract(Califications.abi, contractAddress);
 
-    getCalifications();
+    await getShops();
+    await getCalifications();
   }, [])
 
   useEffect(() => {
@@ -32,19 +34,38 @@ function App() {
   
   async function getCalifications(){
     const result = await contract.methods.getCalifications().call();
-    console.log(result);
+    console.log('califications', result);
     setCalifications(result);
   }  
 
+  async function getShops(){
+    const result = await contract.methods.getShops().call();
+    console.log('getShops', result);
+    setShops(result);
+  }  
+
   return (
-    <div className="App">
-      {califications.map((calification, i) => (
-        <div key={i}>
-          <p>
-            ID: {i} - {calification.description}
-          </p>
-        </div>
-      ))}
+    <div className="main">
+      <div className="shops">
+        {shops.map((shop, i) => (
+          <div key={i}>
+            <p>
+              ID: {i} - {shop.name} {shop.description}
+            </p>
+          </div>
+        ))}
+      </div>
+
+
+      <div className="App">
+        {califications.map((calification, i) => (
+          <div key={i}>
+            <p>
+              ID: {i} - {calification.description}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
